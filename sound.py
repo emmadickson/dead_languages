@@ -61,32 +61,32 @@ color_mappings = {
 }
 
 sound_mappings = {
-'red': 300, 
-'dark_red': 400,
-'orange': 500, 
-'coral': 600,
-'dark_orange': 700, 
-'yellow': 800, 
-'golden_rod': 900, 
-'antique_white': 1000,
-'corn_silk': 1100,
-'burly_wood': 1200,
-'green': 1300, 
-'light_sea_green': 1400, 
-'cornflower_blue': 1500,
-'blue': 1600,
-'aqua': 1650,
-'midnight_blue': 650, 
-'purple': 750, 
-'medium_purple': 850,
-'indigo':950,
-'blue_violet': 1050,
-'dark_magenta': 1150,
-'deep_pink': 1250,
-'brown': 1350, 
-'saddle_brown': 1450, 
-'white': 1550,
-'black': 1650
+'red': 17600, 
+'dark_red': 17700,
+'orange': 17800, 
+'coral': 17900,
+'dark_orange': 18000, 
+'yellow': 18100, 
+'golden_rod': 18200, 
+'antique_white': 18300,
+'corn_silk': 18400,
+'burly_wood': 18500,
+'green': 18600, 
+'light_sea_green': 18700, 
+'cornflower_blue': 18800,
+'blue': 18900,
+'aqua': 19000,
+'midnight_blue': 19100, 
+'purple': 19200, 
+'medium_purple':19300,
+'indigo':19400,
+'blue_violet': 19500,
+'dark_magenta': 19600,
+'deep_pink': 19700,
+'brown': 19800, 
+'saddle_brown': 19900, 
+'white': 20000,
+'black': 20100
 }
 
 takeClosest = lambda num,collection:min(collection,key=lambda x:abs(x-num))
@@ -121,11 +121,12 @@ def generate_tone(f, numSamples=duration * fs):
         sample *= math.sin(math.pi * 2 * (i % numSamplesPerCyc) / numSamplesPerCyc)
         data.append(int(sample))
 
-f = open("raw_data_rgb.txt", "r")
+f = open("audacity.txt", "w")
 g = open("raw_color_check.txt", "w")
-
-pixels = (f.read().split("\n"))
-generate_tone(1700, fs*.3)
+t = open("raw_data_rgb.txt", "r")
+pixels = (t.read().split("\n"))
+generate_tone(1750, fs*.5)
+f.write( "(stretch .05 (hzosc 17500))\n")
 count = 0
 buckets = multiple(500, 42)
 
@@ -136,8 +137,9 @@ for pix in pixels:
 
         color = {'r': pix[0], 'g': pix[1], 'b': pix[2]}
         color = find_css_color(color)
-        generate_tone(sound_mappings[color])
-        
+        #generate_tone(sound_mappings[color])
+    
+        f.write("(stretch .02 (hzosc %s))\n" % sound_mappings[color])
         #complex encoding
         
         #round_number_0 = int(myround(int(pix[0])))
@@ -153,16 +155,18 @@ for pix in pixels:
         #generate_tone(int(color_x))
         
         #black and white
-        #generate_tone(int(pix[0])*10)
+        generate_tone(int(pix[0])*10)
         
         if count == 200:
-            generate_tone(1800, fs*.3)
+            generate_tone(3000, fs*.5)
+            f.write( "(stretch .05 (hzosc 17500))\n")
             count = 0
         g.write("'"+str(color)+"'")
         g.write(",")
         g.write("\n")
         count = count + 1
-generate_tone(1900, fs*.3)
+generate_tone(3100, fs*.5)
+f.write( "(stretch .05 (hzosc 22000))\n")
 f = wave.open('sound.wav', 'w')
 f.setparams((int(channels), int(dataSize), int(fs), int(numSamples), "NONE", "Uncompressed"))
 f.writeframes(data.tostring())
