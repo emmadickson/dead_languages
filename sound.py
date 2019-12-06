@@ -6,8 +6,8 @@ import array
 import wave
 from math import *
 
-"""
-im = Image.open('images/girl.JPG')
+
+'''im = Image.open('images/result.png')
 pixels = list(im.getdata())
 
 raw_data_rgb = open("raw_data_rgb.txt", 'w')
@@ -21,8 +21,7 @@ for pix in pixels:
 
     raw_data_rgb.write(pix)
     raw_data_rgb.write("\n")
-"""
-
+'''
 volume = 100     # range [0.0, 1.0]
 fs = 44100       # sampling rate, Hz, must be integer
 duration = .018 # in seconds, may be float
@@ -121,12 +120,12 @@ def generate_tone(f, numSamples=duration * fs):
         sample *= math.sin(math.pi * 2 * (i % numSamplesPerCyc) / numSamplesPerCyc)
         data.append(int(sample))
 
-f = open("audacity.txt", "w")
-g = open("raw_color_check.txt", "w")
+#f = open("audacity.txt", "w")
+#g = open("raw_color_check.txt", "w")
 t = open("raw_data_rgb.txt", "r")
 pixels = (t.read().split("\n"))
-generate_tone(1750, fs*.5)
-f.write( "(stretch .05 (hzosc 17500))\n")
+generate_tone(1500, fs*.03)
+#f.write( "(stretch .05 (hzosc 17500))\n")
 count = 0
 buckets = multiple(500, 42)
 
@@ -135,39 +134,29 @@ for pix in pixels:
         pix = pix.split(" ")
         p = pyaudio.PyAudio()
 
-        color = {'r': pix[0], 'g': pix[1], 'b': pix[2]}
-        color = find_css_color(color)
+        #color = {'r': pix[0], 'g': pix[1], 'b': pix[2]}
+        #color = find_css_color(color)
         #generate_tone(sound_mappings[color])
-    
-        f.write("(stretch .02 (hzosc %s))\n" % sound_mappings[color])
-        #complex encoding
-        
-        #round_number_0 = int(myround(int(pix[0])))
-        #r_value = buckets.index(round_number_0)
-        
-        #round_number_1 = int(myround(int(pix[1])))
-        #g_value = buckets.index(round_number_1)
-        
-        #round_number_2 = int(myround(int(pix[2])))
-        #b_value = buckets.index(round_number_2)
+        generate_tone(400-int(pix[0]))
+        #f.write("(stretch .02 (hzosc %s))\n" % sound_mappings[color])
         
         #color_x = str(r_value) + str(g_value) + str(b_value)
         #generate_tone(int(color_x))
         
         #black and white
-        generate_tone(int(pix[0])*10)
+        #generate_tone(int(pix[0])*10)
         
         if count == 200:
-            generate_tone(3000, fs*.5)
-            f.write( "(stretch .05 (hzosc 17500))\n")
+            generate_tone(1200, fs*.03)
+            #f.write( "(stretch .05 (hzosc 17500))\n")
             count = 0
-        g.write("'"+str(color)+"'")
-        g.write(",")
-        g.write("\n")
+        #g.write("'"+str(color)+"'")
+        #g.write(",")
+        #g.write("\n")
         count = count + 1
-generate_tone(3100, fs*.5)
-f.write( "(stretch .05 (hzosc 22000))\n")
-f = wave.open('sound.wav', 'w')
+generate_tone(1700, fs*.03)
+#f.write( "(stretch .05 (hzosc 22000))\n")
+f = wave.open('red_sound.wav', 'w')
 f.setparams((int(channels), int(dataSize), int(fs), int(numSamples), "NONE", "Uncompressed"))
 f.writeframes(data.tostring())
 f.close()
