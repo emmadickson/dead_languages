@@ -137,7 +137,7 @@ for pix in pixels:
         #color = {'r': pix[0], 'g': pix[1], 'b': pix[2]}
         #color = find_css_color(color)
         #generate_tone(sound_mappings[color])
-        generate_tone(400-int(pix[0]))
+        generate_tone(1100-int(pix[2]))
         #f.write("(stretch .02 (hzosc %s))\n" % sound_mappings[color])
         
         #color_x = str(r_value) + str(g_value) + str(b_value)
@@ -147,7 +147,7 @@ for pix in pixels:
         #generate_tone(int(pix[0])*10)
         
         if count == 200:
-            generate_tone(1200, fs*.03)
+            generate_tone(1200, fs*.3)
             #f.write( "(stretch .05 (hzosc 17500))\n")
             count = 0
         #g.write("'"+str(color)+"'")
@@ -156,7 +156,7 @@ for pix in pixels:
         count = count + 1
 generate_tone(1700, fs*.03)
 #f.write( "(stretch .05 (hzosc 22000))\n")
-f = wave.open('red_sound.wav', 'w')
+f = wave.open('blue_sound.wav', 'w')
 f.setparams((int(channels), int(dataSize), int(fs), int(numSamples), "NONE", "Uncompressed"))
 f.writeframes(data.tostring())
 f.close()
