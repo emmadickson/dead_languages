@@ -24,10 +24,10 @@ Map<String, int[]> color_mappings = new Hashtable();
 int cellCount = 0;
 int t = 200;
 Integer[] buckets = new Integer[t];
-
+int total_count = 0;
 
 void setup() {
-  size(300, 300);
+  size(400, 400);
   fill(126);
   background(105);
 
@@ -45,39 +45,28 @@ void setup() {
 void makepixel(color c){
   stroke(c);
   fill(c);          // Setting the interior of a shape (fill) to grey 
-  rect(x,y,3,3);
-  x = x + 3;
+  rect(x,y,2,2);
+  x = x + 2;
+  total_count = total_count + 1;
   cellCount = cellCount + 1;
-  if (cellCount >= 100){
+  if (cellCount >= 200){
     x = 0;
-    y = y + 3;
+    y = y + 2;
     cellCount = 0;
+  }
+  if (total_count >= 40000){
+    listening = false;
   }
 }
 
 boolean starter_threshold(String[] values){
   int count = 0;
   for (int i = 0; i < values.length; i++){
-    if (parseInt(values[i]) > 1600 && parseInt(values[i]) < 1750){
+    if (parseInt(values[i]) > 2950 && parseInt(values[i]) < 5400){
       count = count + 1;
     }
   }
   if (count >= 1){
-    return true;
-  }
-  else {
-    return false;
-  }
-}
-
-boolean end_threshold(String[] values){
-  int count = 0;
-  for (int i = 0; i < values.length; i++){
-    if (parseInt(values[i]) > 1850 && parseInt(values[i]) < 1950){
-      count = count + 1;
-    }
-  }
-  if (count >= 3){
     return true;
   }
   else {
@@ -91,8 +80,6 @@ void draw() {
   int max_1_index = -1;
   float max_2 = -1;
   int max_2_index = -1;
-  float max_3 = -1;
-  int max_3_index = -1;
   
   for(int i = 0; i < bands; i++){
     if(spectrum[i] > max_1){
@@ -103,13 +90,8 @@ void draw() {
        max_2 = spectrum[i];
        max_2_index = i;
       }
-      if(spectrum[i] > max_3 && i != max_1_index && i != max_2_index){
-       max_3 = spectrum[i];
-       max_3_index = i;
-      }
   } 
   int average = ((max_1_index*41)+(max_2_index*41))/2; 
-  println(average);
   items = items + "," + average;
   String[] list = split(items, ",");
   
@@ -123,19 +105,15 @@ void draw() {
     }
   
     if (listening != false) {
-      boolean end = end_threshold(packet);
-      if (end == true){
-        listening = false;
-        println("done");
-      }
+      
       for (int i = 0; i < packet.length; i++){
-        if (parseInt(packet[i]) >= 4000 && parseInt(packet[i]) <= 11000){  
-   
+        if (parseInt(packet[i]) >= 2000 && parseInt(packet[i]) <= 6500){  
+     
           String[] row_pixels = split(row, ",");
-          println(row_pixels);
           List<String> pixelList = Arrays.asList(row_pixels);  
-          if (row_pixels.length > 50){
-            int diff = row_pixels.length - 100;
+          if (row_pixels.length >= 20){
+            int diff = row_pixels.length - 50;
+            println("section detected");
             println(diff);
              if (diff > 0){
              for (int k = 0; k < diff; k++){
@@ -159,7 +137,7 @@ void draw() {
                if (diff < 0){
                  for (int l = 0; l < diff*-1; l++){
                  String[] replacement = new String[row_pixels.length +1];
-                  int rand = (int)random(row_pixels.length-4);
+                  int rand = (int)random(row_pixels.length-1);
                   if (rand == 0){
                     rand = 1;
                   }
@@ -182,13 +160,13 @@ void draw() {
            for (int l = 0; l <= row_pixels.length-1; l++){
              
              int freq = parseInt(row_pixels[l]);
-           
              if (freq == 0){
                color c = color(0, 0, 0);
                 makepixel(c);
              }
              else{
               //grayscale
+              
                color c = color(freq/10, freq/10, freq/10);
                makepixel(c);
              }
