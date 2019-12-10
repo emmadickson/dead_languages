@@ -2,8 +2,8 @@ import processing.sound.*;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Hashtable;
-import java.util.Arrays;  
-import java.util.List;  
+import java.util.Arrays;
+import java.util.List;
 import java.util.ArrayList;
 
 FFT fft;
@@ -33,18 +33,18 @@ void setup() {
 
   fft = new FFT(this, bands);
   in = new AudioIn(this, 0);
-  
+
   // start the Audio Input
   in.start();
-  
+
   // patch the AudioIn
   fft.input(in);
-  
-}      
+
+}
 
 void makepixel(color c){
   stroke(c);
-  fill(c);          // Setting the interior of a shape (fill) to grey 
+  fill(c);          // Setting the interior of a shape (fill) to grey
   rect(x,y,2,2);
   x = x + 2;
   total_count = total_count + 1;
@@ -74,13 +74,13 @@ boolean starter_threshold(String[] values){
   }
 }
 
-void draw() { 
+void draw() {
   fft.analyze(spectrum);
   float max_1 = -1;
   int max_1_index = -1;
   float max_2 = -1;
   int max_2_index = -1;
-  
+
   for(int i = 0; i < bands; i++){
     if(spectrum[i] > max_1){
        max_1 = spectrum[i];
@@ -90,11 +90,11 @@ void draw() {
        max_2 = spectrum[i];
        max_2_index = i;
       }
-  } 
-  int average = ((max_1_index*41)+(max_2_index*41))/2; 
+  }
+  int average = ((max_1_index*41)+(max_2_index*41))/2;
   items = items + "," + average;
   String[] list = split(items, ",");
-  
+
   if (list.length >= 6){
     String[] packet = subset(list, 0, 3);
     if (listening == false){
@@ -103,14 +103,26 @@ void draw() {
         println("listening");
       }
     }
-  
+
     if (listening != false) {
-      
+
       for (int i = 0; i < packet.length; i++){
-        if (parseInt(packet[i]) >= 2000 && parseInt(packet[i]) <= 6500){  
-     
+        if (parseInt(packet[i]) >= 2000 && parseInt(packet[i]) <= 12500){
+          int quarter = 0;
+          if (int(packet[i]) >2000 && int(packet[i]) < 5000){
+            quarter = 0;
+          }
+          if (int(packet[i]) >5500 && int(packet[i]) < 7000){
+            quarter = 1;
+          }
+          if (int(packet[i]) >7500 && int(packet[i]) < 9000){
+            quarter = 2;
+          }
+          if (int(packet[i]) >9500 && int(packet[i]) < 11000){
+            quarter = 3;
+          }
           String[] row_pixels = split(row, ",");
-          List<String> pixelList = Arrays.asList(row_pixels);  
+          List<String> pixelList = Arrays.asList(row_pixels);
           if (row_pixels.length >= 20){
             int diff = row_pixels.length - 50;
             println("section detected");
@@ -157,8 +169,8 @@ void draw() {
              }
            println("fixed");
            println(row_pixels.length);
+           x = quarter * x;
            for (int l = 0; l <= row_pixels.length-1; l++){
-             
              int freq = parseInt(row_pixels[l]);
              if (freq == 0){
                color c = color(0, 0, 0);
@@ -166,7 +178,7 @@ void draw() {
              }
              else{
               //grayscale
-              
+
                color c = color(freq/10, freq/10, freq/10);
                makepixel(c);
              }
@@ -176,7 +188,7 @@ void draw() {
           row = "";
         }
         if  (parseInt(packet[i]) > 150){
-          
+
           row = row + "," + packet[i];
         }
       }
