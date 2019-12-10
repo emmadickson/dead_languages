@@ -6,22 +6,6 @@ import wave
 from math import *
 
 
-'''im = Image.open('images/result.png')
-pixels = list(im.getdata())
-
-raw_data_rgb = open("raw_data_rgb.txt", 'w')
-
-for pix in pixels:
-    pix = str(pix)
-
-    pix = pix.replace("(", "")
-    pix = pix.replace(")", "")
-    pix = pix.replace(",", "")
-
-    raw_data_rgb.write(pix)
-    raw_data_rgb.write("\n")
-'''
-
 volume = 100     # range [0.0, 1.0]
 fs = 44100       # sampling rate, Hz, must be integer
 duration = .018 # in seconds, may be float
@@ -34,7 +18,6 @@ color_mappings = {
 'red': {'r': 255, 'g': 0, 'b': 0},
 'dark_red': {'r': 139, 'g': 0, 'b': 0},
 'orange': {'r': 255, 'g': 165, 'b': 0},
-'coral': {'r': 255, 'g': 127, 'b': 80},
 'dark_orange': {'r':255, 'g': 140, 'b': 0},
 'yellow': {'r': 255, 'g': 255, 'b': 0},
 'golden_rod': {'r':218, 'g': 165, 'b': 32},
@@ -60,32 +43,31 @@ color_mappings = {
 }
 
 sound_mappings = {
-'red': 17600,
-'dark_red': 17700,
-'orange': 17800,
-'coral': 17900,
-'dark_orange': 18000,
-'yellow': 18100,
-'golden_rod': 18200,
-'antique_white': 18300,
-'corn_silk': 18400,
-'burly_wood': 18500,
-'green': 18600,
-'light_sea_green': 18700,
-'cornflower_blue': 18800,
-'blue': 18900,
-'aqua': 19000,
-'midnight_blue': 19100,
-'purple': 19200,
-'medium_purple':19300,
-'indigo':19400,
-'blue_violet': 19500,
-'dark_magenta': 19600,
-'deep_pink': 19700,
-'brown': 19800,
-'saddle_brown': 19900,
-'white': 20000,
-'black': 20100
+'red': 100,
+'dark_red': 200,
+'orange': 300,
+'dark_orange': 450,
+'yellow': 500,
+'golden_rod': 550,
+'antique_white': 600,
+'corn_silk': 700,
+'burly_wood': 750,
+'green': 800,
+'light_sea_green': 850,
+'cornflower_blue': 900,
+'blue': 950,
+'aqua': 1000,
+'midnight_blue': 1050,
+'purple': 1100,
+'medium_purple':1150,
+'indigo':1200,
+'blue_violet': 1250,
+'dark_magenta': 1300,
+'deep_pink': 1350,
+'brown': 1400,
+'saddle_brown': 1450,
+'white': 1500,
+'black': 1550
 }
 
 takeClosest = lambda num,collection:min(collection,key=lambda x:abs(x-num))
@@ -123,10 +105,10 @@ def generate_tone(f, numSamples=duration * fs):
 
 t = open("raw_data_rgb.txt", "r")
 pixels = (t.read().split("\n"))
-generate_tone(1700, fs*.03)
+generate_tone(3000, fs*.3)
 count = 0
 buckets = multiple(500, 42)
-
+quarter = 0
 for pix in pixels:
     if pix != "":
         pix = pix.split(" ")
@@ -139,24 +121,23 @@ for pix in pixels:
 
         # Signal Carrier
         #red
-        generate_tone(400-int(pix[0]))
-        generate_tone(2000-int(pix[0]), fs*.018)
-
+        #generate_tone(400-int(pix[0]))
+        #generate_tone(4500, fs*.1)
         #green
         #generate_tone(750-int(pix[1]))
         #blue
         #generate_tone(1100-int(pix[2]))
-
+        
         #black and white
-        #generate_tone(int(pix[0])*10)
-
-        if count == 200:
-            generate_tone(1500, fs*.3)
+        generate_tone(int(pix[0])*10)
+        if count == 50:
+            generate_tone(4000, fs*.3)
+            
             count = 0
+    
         count = count + 1
 
-generate_tone(1900, fs*.03)
-f = wave.open('red_sound.wav', 'w')
+f = wave.open('b&w.wav', 'w')
 f.setparams((int(channels), int(dataSize), int(fs), int(numSamples), "NONE", "Uncompressed"))
 f.writeframes(data.tostring())
 f.close()

@@ -1,1 +1,0 @@
-(stretch .05 (hzosc 17500))
