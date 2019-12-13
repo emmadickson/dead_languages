@@ -33,65 +33,24 @@ void setup() {
   int[] red = {255, 0, 0};
   color_mappings.put("red", red);
   
-  int[] dark_red = {139, 0, 0};
-  color_mappings.put("dark_red", dark_red);
+  
   int[] orange = {255, 165, 0};
-  
   color_mappings.put("orange", orange);
-  
-  int[] coral = {255, 140, 0};
-  color_mappings.put("coral", coral);
-  
-    int[] dark_orange = {255, 127, 80};
-  color_mappings.put("dark_orange", dark_orange);
   
   int[] yellow = {255, 255, 0};
   color_mappings.put("yellow", yellow);
   
-  int[] golden_rod = {218, 165, 0};
-  color_mappings.put("golden_rod", golden_rod);
-  
-  int[] antique_white = {250, 235, 215};
-  color_mappings.put("antique_white", antique_white);
-  
-  int[] corn_silk = {255, 248, 220};
-  color_mappings.put("corn_silk", corn_silk);
-  
-  int[] burly_wood = {222, 184, 135};
-  color_mappings.put("burly_wood", burly_wood);
-  
   int[] green = {0, 128, 0};
   color_mappings.put("green", green);
-  
-  int[] light_sea_green = {32, 178, 170};
-  color_mappings.put("light_sea_green", light_sea_green);
-  
-  int[] cornflower_blue = {100, 149, 237};
-  color_mappings.put("cornflower_blue", cornflower_blue);
   
   int[] blue = {0, 0, 255};
   color_mappings.put("blue", blue);
   
-  int[] aqua = {0, 255, 255};
-  color_mappings.put("aqua", aqua);
-  
-  int[] midnight_blue = {25, 25, 112};
-  color_mappings.put("midnight_blue", midnight_blue);
-  
   int[] purple = {128, 0, 128};
   color_mappings.put("purple", purple);
-  
-  int[] medium_purple = {147, 112, 219};
-  color_mappings.put("medium_purple", medium_purple);
 
   int[] indigo = {75, 0, 130};
   color_mappings.put("indigo", indigo);
-  
-  int[] blue_violet = {138, 43, 226};
-  color_mappings.put("blue_violet", blue_violet);
-  
-  int[] dark_magenta = {139, 0, 139};
-  color_mappings.put("dark_magenta", dark_magenta);
   
   int[] deep_pink = {255, 20, 147};
   color_mappings.put("deep_pink", deep_pink);
@@ -99,40 +58,23 @@ void setup() {
   int[] brown = {165, 42, 42};
   color_mappings.put("brown", brown);
   
-  int[] saddle_brown = {139, 69, 19};
-  color_mappings.put("saddle_brown", saddle_brown);
-  
   int[] white = {255, 255, 255};
   color_mappings.put("white", white);
   
   int[] black = {0, 0, 0};
   color_mappings.put("black", black);
   
-  sound_mappings.put(100, "red");
-  sound_mappings.put(200, "dark_red");
-  sound_mappings.put(300, "orange");
-  sound_mappings.put(400, "dark_orange");
-  sound_mappings.put(450, "yellow");
-  sound_mappings.put(500, "golden_rod");
-  sound_mappings.put(550, "antique_white");
-  sound_mappings.put(600, "corn_silk");
-  sound_mappings.put(650, "burly_wood");
-  sound_mappings.put(700, "green");
-  sound_mappings.put(750, "light_sea_green");
-  sound_mappings.put(800, "cornflower_blue");
-  sound_mappings.put(850, "blue");
-  sound_mappings.put(900, "aqua");
-  sound_mappings.put(1000, "midnight_blue");
-  sound_mappings.put(1050, "purple");
-  sound_mappings.put(1100, "medium_purple");
-  sound_mappings.put(1150, "indigo");
-  sound_mappings.put(1200, "blue_violet");
-  sound_mappings.put(1250, "dark_magenta");
-  sound_mappings.put(1300, "deep_pink");
-  sound_mappings.put(1350, "brown");
-  sound_mappings.put(1400, "saddle_brown");
-  sound_mappings.put(1450, "white");
-  sound_mappings.put(1500, "black");
+  sound_mappings.put(300, "red");
+  sound_mappings.put(400, "orange");
+  sound_mappings.put(500, "yellow");
+  sound_mappings.put(600, "green");
+  sound_mappings.put(700, "blue");
+  sound_mappings.put(800, "purple");
+  sound_mappings.put(900, "indigo");
+  sound_mappings.put(1000, "deep_pink");
+  sound_mappings.put(1100, "brown");
+  sound_mappings.put(1200, "white");
+  sound_mappings.put(1300, "black");
 
 
 
@@ -188,7 +130,7 @@ void makepixel(color c){
 boolean starter_threshold(String[] values){
   int count = 0;
   for (int i = 0; i < values.length; i++){
-    if (parseInt(values[i]) > 1600 && parseInt(values[i]) < 1750){
+    if (parseInt(values[i]) > 9000 && parseInt(values[i]) < 11500){
       count = count + 1;
     }
   }
@@ -258,12 +200,12 @@ void draw() {
         println("done");
       }
       for (int i = 0; i < packet.length; i++){
-        if (parseInt(packet[i]) >= 9000 && parseInt(packet[i]) <= 11000){  
+        if (parseInt(packet[i]) >= 3000 && parseInt(packet[i]) <= 5500){  
    
           String[] row_pixels = split(row, ",");
           List<String> pixelList = Arrays.asList(row_pixels);  
           if (row_pixels.length > 50){
-            int diff = row_pixels.length - 100;
+            int diff = row_pixels.length -50;
             println(diff);
              if (diff > 0){
              for (int k = 0; k < diff; k++){

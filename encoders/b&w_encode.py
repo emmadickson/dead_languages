@@ -8,7 +8,7 @@ from math import *
 
 volume = 100     # range [0.0, 1.0]
 fs = 44100       # sampling rate, Hz, must be integer
-duration = .01 # in seconds, may be float
+duration = .016 # in seconds, may be float
 data = array.array('h') # signed short integer (-32768 to 32767) data
 channels = 1
 dataSize = 2
@@ -26,7 +26,7 @@ def generate_tone(f, numSamples=duration * fs):
 
 t = open("raw_data_rgb.txt", "r")
 pixels = (t.read().split("\n"))
-generate_tone(3000, fs*.3)
+generate_tone(5500, fs*.1)
 count = 0
 quarter = 0
 for pix in pixels:
@@ -37,16 +37,7 @@ for pix in pixels:
         #black and white
         generate_tone(int(pix[0])*10)
         if count == 50:
-            quarter = quarter + 1
-            if quarter == 1:
-                generate_tone(4000, fs*.08)
-            if quarter == 2:
-                generate_tone(6000, fs*.08)
-            if quarter == 3:
-                generate_tone(8000, fs*.08)
-            if quarter == 4:
-                generate_tone(11000, fs*.08)
-                quarter = 0
+            generate_tone(10000, fs*.08)
             count = 0
 
         count = count + 1
