@@ -14,86 +14,38 @@ dataSize = 2
 numSamples = duration * fs
 
 color_mappings = {
-'dark_red': {'r': 115, 'g': 1, 'b': 1},
-'bright_red': {'r': 255, 'g': 0, 'b': 0},
-'medium_red': {'r': 161, 'g': 24, 'b': 0},
-
-'dark_orange': {'r': 255, 'g': 77, 'b': 0},
-'orange': {'r': 255, 'g': 149, 'b': 0},
-'light_orange': {'r': 242, 'g': 141, 'b': 78},
-
-'dark_yellow': {'r': 255, 'g': 191, 'b': 0},
-'yellow': {'r': 255, 'g': 247, 'b': 0},
-'light_yellow': {'r': 255, 'g': 224, 'b': 131},
-
-'dark_green': {'r': 2, 'g': 184, 'b': 62},
-'bright_green': {'r': 77, 'g': 255, 'b': 0},
-'pale_green': {'r': 170, 'g': 227, 'b': 176},
-
-'sky': {'r': 150, 'g': 199, 'b': 255},
-'light_blue': {'r': 0, 'g': 252, 'b': 252},
-'blue': {'r': 0, 'g': 29, 'b': 252},
-'folder_blue': {'r': 2, 'g': 110, 'b': 232},
-
-'indigo': {'r': 6, 'g': 11, 'b': 92},
-
-'purple': {'r': 97, 'g': 0, 'b': 252},
-'purple_sky': {'r': 153, 'g': 116, 'b': 166},
-'dark_purple': {'r': 58, 'g': 15, 'b': 128},
-
-'deep_pink': {'r': 209, 'g': 2, 'b': 199},
-'nipple_pink': {'r': 158, 'g': 96, 'b': 130},
-'millenial_pink': {'r': 245, 'g': 176, 'b': 176},
-
-'brown': {'r': 150, 'g': 75, 'b': 0},
-'rust': {'r': 122, 'g': 51, 'b': 7},
-'hollywood_brown': {'r': 176, 'g': 123, 'b': 79},
-
-'white': {'r': 255, 'g': 255, 'b': 255},
-'black': {'r': 0, 'g': 0, 'b': 0},
-'gray': {'r': 169, 'g': 162, 'b': 179}
-
+'poppy_field': {'r': 179, 'g': 48, 'b': 34},
+'yellow_brick_road': {'r': 229, 'g': 207, 'b': 60},
+'mint': {'r': 188, 'g': 217, 'b': 190},
+'powder_blue': {'r': 159, 'g': 176, 'b': 199},
+'egyptian_blue': {'r': 69, 'g': 94, 'b': 149},
+'jade': {'r': 81, 'g': 114, 'b': 91},
+'wizard': {'r': 134, 'g': 205, 'b': 106},
+'deep_pink': {'r': 204, 'g': 85, 'b': 155},
+'white':{'r': 255, 'g': 255, 'b': 255},
+'black':{'r': 0, 'g': 0, 'b': 0},
+'magenta': {'r': 255, 'g': 0, 'b': 255},
+'cyan': {'r': 0, 'g': 255, 'b': 255},
+'yellow': {'r': 255, 'g': 255, 'b': 0},
+'digital_green': {'r': 164, 'g': 255, 'b': 78}
 }
 
 sound_mappings = {
-'dark_red': 200,
-'bright_red': 250,
-'medium_red': 300,
-
-'dark_orange': 350,
-'orange': 400,
-'light_orange': 450,
-
-'dark_yellow': 500,
-'yellow': 550,
-'light_yellow': 600,
-
-'dark_green': 650,
-'bright_green': 700,
-'pale_green': 750,
-
-'sky': 800,
-'light_blue': 850,
-'blue': 900,
-'folder_blue': 950,
-
-'indigo': 1000,
-
-'purple': 1050,
-'purple_sky': 1100,
-'dark_purple': 1150,
-
-'deep_pink': 1200,
-'nipple_pink': 1250,
-'millenial_pink': 1300,
-
-'brown': 1350,
-'rust': 1400,
-'hollywood_brown': 1450,
-
-'white': 1500,
-'black': 1550,
-'gray': 1600
+'poppy_field': 200,
+'slippers': 230,
+'yellow_brick_road': 300,
+'mint': 400,
+'powder_blue': 500,
+'egyptian_blue': 600,
+'jade': 700,
+'wizard': 500,
+'deep_pink': 800,
+'white': 1100,
+'black': 1150,
+'magenta': 1200,
+'cyan': 1250,
+'yellow': 1300,
+'digital_green': 1345
 }
 
 takeClosest = lambda num,collection:min(collection,key=lambda x:abs(x-num))
