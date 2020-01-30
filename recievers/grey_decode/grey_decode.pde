@@ -21,13 +21,41 @@ boolean listening = false;
 String row = "";
 int rgb = 0;
 
-Map<Integer, String[]> color_mappings = new Hashtable();
+Map<Integer, String[]> og_color_mappings = new Hashtable();
+Map<String, int[]> color_mappings = new Hashtable();
 
 int cellCount = 0;
 int total_count = 0;
 
 void setup() {
-
+ int[] poppy_field = {179, 48, 34};
+  color_mappings.put("poppy_field", poppy_field);
+  int[] yellow_brick_road = {229, 207, 60};
+  color_mappings.put("yellow_brick_road", yellow_brick_road);
+  int[] mint = {188, 217, 190};
+  color_mappings.put("mint", mint);
+  int[] powder_blue = {159, 176, 199};
+  color_mappings.put("powder_blue", powder_blue);
+  int[] egyptian_blue = {69, 94, 149};
+  color_mappings.put("egyptian_blue", egyptian_blue);
+  int[] jade = {81, 114, 91};
+  color_mappings.put("jade", jade);
+  int[] wizard = {134, 205, 106};
+  color_mappings.put("wizard", wizard);
+  int[] deep_pink = {204, 85, 155};
+  color_mappings.put("deep_pink", deep_pink);
+  int[] white = {255, 255, 255};
+  color_mappings.put("white", white);
+  int[] black = {0, 0, 0};
+  color_mappings.put("black", black);
+  int[] magenta = {255, 0,255};
+  color_mappings.put("magenta", magenta);
+  int[] cyan = {0, 255,255};
+  color_mappings.put("cyan", cyan);
+  int[] yellow = {255, 255, 0};
+  color_mappings.put("yellow", yellow);
+  int[] digital_green = {164, 255, 78};
+  color_mappings.put("digital_green", digital_green);
   size(600, 600);
   fill(126);
   background(105);
@@ -46,11 +74,11 @@ void setup() {
 void makepixel(color c){
   stroke(c);
   fill(c);          // Setting the interior of a shape (fill) to grey
-  rect(x,y,4,4);
-  x = x + 4;
+  rect(x,y,6,6);
+  x = x + 6;
   total_count = total_count + 1;
   cellCount = cellCount + 1;
-  if (cellCount >= 150){
+  if (cellCount >= 100){
 
     x = 0;
     y = y + 4;
@@ -60,7 +88,20 @@ void makepixel(color c){
     listening = false;
   }
 }
-
+int[] map_freq(int[] new_color, Map<String, int[]> color_mappings){
+  int min = 1000;
+  int[] color_match = {0, 0, 0};
+  for (Map.Entry<String, int[]> entry : color_mappings.entrySet()) {
+        int[] value = entry.getValue();
+    
+        float d = sqrt(pow(((int(new_color[0]) - int(value[0]))*0.6),2) + pow(((int(new_color[1]) - int(value[1]))*0.59),2) + pow(((int(new_color[2]) - int(value[2]))*0.11),2));
+        if (int(d) < int(min)){
+          min = int(d);
+          color_match = value;
+         }
+    }
+    return color_match;
+}
 boolean starter_threshold(String[] values){
   int count = 0;
   for (int i = 0; i < values.length; i++){
@@ -108,7 +149,7 @@ void draw() {
           String[] row_pixels = split(row, ",");
           List<String> pixelList = Arrays.asList(row_pixels);
           if (row_pixels.length >= 20){
-            int diff = row_pixels.length - 77;
+            int diff = row_pixels.length - 52;
              row_pixels = subset(row_pixels, 2);
             println(diff);
              if (diff > 0){
@@ -152,21 +193,25 @@ void draw() {
              }
            println("fixed");
            println(row_pixels.length);
-           color_mappings.put(rgb, row_pixels);
+           og_color_mappings.put(rgb, row_pixels);
            if (rgb == 2){
              rgb = -1;
-             String[] red_row = color_mappings.get(0);
-             String[] green_row = color_mappings.get(1);
-             String[] blue_row = color_mappings.get(2);
+             String[] red_row = og_color_mappings.get(0);
+             String[] green_row = og_color_mappings.get(1);
+             String[] blue_row = og_color_mappings.get(2);
              for (int l = 0; l <= row_pixels.length-1; l++){     
-                 makepixel(1500-parseInt(red_row[l]), 1500-parseInt(green_row[l]), 1500-parseInt(blue_row[l]));
+                 int[] parse_color = {700-parseInt(red_row[l]), 700-parseInt(green_row[l]), 700-parseInt(blue_row[l])};
+                 int[] color_mapped = map_freq(parse_color, color_mappings);
+                 color c = color(color_mapped[0], color_mapped[1], color_mapped[2]);
+                 makepixel(c);
+                 
               }  
            }
            rgb = rgb + 1;
           }
           row = "";
         }
-        if  (parseInt(packet[i]) > 150){
+        if  (parseInt(packet[i]) > 150 && parseInt(packet[i]) <= 1500){
 
           row = row + "," + packet[i];
         }
