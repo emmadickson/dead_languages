@@ -30,6 +30,23 @@ color_mappings = {
 'digital_green': {'r': 164, 'g': 255, 'b': 78}
 }
 
+sound_mappings = {
+'poppy_field': 300,
+'yellow_brick_road': 400,
+'mint': 500,
+'powder_blue': 600,
+'egyptian_blue': 700,
+'jade': 800,
+'wizard': 900,
+'deep_pink': 1000,
+'white': 1100,
+'black': 1200,
+'magenta': 1300,
+'cyan': 1400,
+'yellow': 1500,
+'digital_green': 1600
+}
+
 takeClosest = lambda num,collection:min(collection,key=lambda x:abs(x-num))
 
 def find_css_color(new_color):
@@ -58,7 +75,7 @@ tt = open("data/rgb.txt", "w")
 pixels = (t.read().split("\n"))
 generate_tone(10000, fs*.5)
 count = 0
-row_red = []
+'''row_red = []
 row_green = []
 row_blue = []
 for pix in pixels:
@@ -73,6 +90,8 @@ for pix in pixels:
         row_blue.append(pix[2])
 
 rgb = 0
+
+
 chunks_row_red = [row_red[x:x+50] for x in range(0, len(row_red), 50)]
 chunks_row_green = [row_green[x:x+50] for x in range(0, len(row_green), 50)]
 chunks_row_blue = [row_blue[x:x+50] for x in range(0, len(row_blue), 50)]
@@ -90,7 +109,23 @@ for x in range(0, 200):
         generate_tone(700-int(blue))
     generate_tone(5500, fs*.1)
 
-f = wave.open('audio/grill.wav', 'w')
+'''
+
+for pix in pixels:
+    if pix != "":
+        pix = pix.split(" ")
+        p = pyaudio.PyAudio()
+
+        color = {'r': pix[0], 'g': pix[1], 'b': pix[2]}
+        color = find_css_color(color)
+        generate_tone(sound_mappings[color])
+        tt.write(str(color))
+        tt.write("\n")
+        if count == 50:
+            generate_tone(6500, fs*.1)
+            count = 0
+        count = count + 1
+f = wave.open('audio/swimmer_old.wav', 'w')
 f.setparams((int(channels), int(dataSize), int(fs), int(numSamples), "NONE", "Uncompressed"))
 f.writeframes(data.tostring())
 f.close()
