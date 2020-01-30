@@ -14,20 +14,17 @@ dataSize = 2
 numSamples = duration * fs
 
 color_mappings = {
-'poppy_field': {'r': 179, 'g': 48, 'b': 34},
-'yellow_brick_road': {'r': 229, 'g': 207, 'b': 60},
-'mint': {'r': 188, 'g': 217, 'b': 190},
-'powder_blue': {'r': 159, 'g': 176, 'b': 199},
-'egyptian_blue': {'r': 69, 'g': 94, 'b': 149},
-'jade': {'r': 81, 'g': 114, 'b': 91},
-'wizard': {'r': 134, 'g': 205, 'b': 106},
-'deep_pink': {'r': 204, 'g': 85, 'b': 55},
+'poppy_field': {'r': 181, 'g': 34, 'b': 37},
+'yellow_brick_road': {'r': 229, 'g': 232, 'b': 68},
+'mint': {'r': 130, 'g': 224, 'b': 60},
+'powder_blue': {'r': 133, 'g': 229, 'b': 219},
+'egyptian_blue': {'r': 25, 'g': 45, 'b': 79},
+'jade': {'r': 31, 'g': 32, 'b': 203},
+'wizard': {'r': 49, 'g': 0, 'b': 109},
+'deep_pink': {'r': 185, 'g': 37, 'b': 219},
 'white': {'r': 255, 'g': 255, 'b': 255},
 'black': {'r': 0, 'g': 0, 'b': 0},
-'magenta': {'r': 255, 'g': 0, 'b': 255},
-'cyan': {'r': 0, 'g': 255, 'b': 255},
-'yellow': {'r': 255, 'g': 255, 'b': 0},
-'digital_green': {'r': 164, 'g': 255, 'b': 78}
+'magenta': {'r': 191, 'g':188, 'b': 187}
 }
 
 sound_mappings = {
@@ -125,7 +122,7 @@ for pix in pixels:
             generate_tone(6500, fs*.1)
             count = 0
         count = count + 1
-f = wave.open('audio/swimmer_old.wav', 'w')
+f = wave.open('audio/man.wav', 'w')
 f.setparams((int(channels), int(dataSize), int(fs), int(numSamples), "NONE", "Uncompressed"))
 f.writeframes(data.tostring())
 f.close()
