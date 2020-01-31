@@ -22,10 +22,7 @@ color_mappings = {
 'blue': {'r': 11, 'g': 35, 'b': 243},
 'white': {'r': 255, 'g': 255, 'b': 255},
 'black': {'r': 0, 'g': 0, 'b': 0},
-'gray1': {'r': 51, 'g': 51, 'b': 51},
-'gray2': {'r': 102, 'g': 102, 'b': 102},
-'gray3': {'r': 152, 'g': 152, 'b': 152},
-'gray3': {'r': 203, 'g': 203, 'b': 203},
+
 'magenta': {'r': 255, 'g': 0, 'b': 255}
 
 }
@@ -118,12 +115,12 @@ for pix in pixels:
         generate_tone(sound_mappings[color])
         tt.write(str(color))
         tt.write("\n")
-        if count == 25:
+        if count == 50:
             generate_tone(6500, fs*.08)
             count = 0
         count = count + 1
         
-f = wave.open('audio/swimmer.wav', 'w')
+f = wave.open('audio/grill.wav', 'w')
 f.setparams((int(channels), int(dataSize), int(fs), int(numSamples), "NONE", "Uncompressed"))
 f.writeframes(data.tostring())
 f.close()

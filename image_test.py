@@ -10,10 +10,7 @@ color_mappings = {
 'blue': {'r': 11, 'g': 35, 'b': 243},
 'white': {'r': 255, 'g': 255, 'b': 255},
 'black': {'r': 0, 'g': 0, 'b': 0},
-'gray1': {'r': 51, 'g': 51, 'b': 51},
-'gray2': {'r': 102, 'g': 102, 'b': 102},
-'gray3': {'r': 152, 'g': 152, 'b': 152},
-'gray3': {'r': 203, 'g': 203, 'b': 203},
+
 'magenta': {'r': 255, 'g': 0, 'b': 255}
 }
 
@@ -28,4 +25,4 @@ for x in range(0, len(pixels)-2):
         data.append((rgb['r'],rgb['g'],rgb['b']))
 
 im.putdata(data)
-im.save('generated_test_images/test47.png')
+im.save('generated_test_images/test48.png')
