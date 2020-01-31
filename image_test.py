@@ -2,17 +2,19 @@ from PIL import Image
 import random
 
 color_mappings = {
-'poppy_field': {'r': 181, 'g': 34, 'b': 37},
-'yellow_brick_road': {'r': 229, 'g': 232, 'b': 68},
-'mint': {'r': 130, 'g': 224, 'b': 60},
-'powder_blue': {'r': 133, 'g': 229, 'b': 219},
-'egyptian_blue': {'r': 25, 'g': 45, 'b': 79},
-'jade': {'r': 31, 'g': 32, 'b': 203},
-'wizard': {'r': 49, 'g': 0, 'b': 109},
-'deep_pink': {'r': 185, 'g': 37, 'b': 219},
+'red': {'r': 251, 'g': 13, 'b': 28},
+'yellow': {'r': 253, 'g': 250, 'b': 55},
+'cyan': {'r': 45, 'g': 255, 'b': 254},
+'green': {'r': 42, 'g': 253, 'b': 47},
+'pink': {'r': 253, 'g': 41, 'b': 252},
+'blue': {'r': 11, 'g': 35, 'b': 243},
 'white': {'r': 255, 'g': 255, 'b': 255},
 'black': {'r': 0, 'g': 0, 'b': 0},
-'magenta': {'r': 191, 'g':188, 'b': 187}
+'gray1': {'r': 51, 'g': 51, 'b': 51},
+'gray2': {'r': 102, 'g': 102, 'b': 102},
+'gray3': {'r': 152, 'g': 152, 'b': 152},
+'gray3': {'r': 203, 'g': 203, 'b': 203},
+'magenta': {'r': 255, 'g': 0, 'b': 255}
 }
 
 colors = open("data/rgb.txt", "r")
@@ -26,4 +28,4 @@ for x in range(0, len(pixels)-2):
         data.append((rgb['r'],rgb['g'],rgb['b']))
 
 im.putdata(data)
-im.save('generated_test_images/test48.png')
+im.save('generated_test_images/test47.png')
