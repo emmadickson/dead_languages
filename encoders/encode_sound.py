@@ -72,14 +72,14 @@ for pix in pixels:
 
         color = {'r': pix[0], 'g': pix[1], 'b': pix[2]}
         color = find_css_color(color)
-        generate_tone(sound_mappings[color])
-        tt.write(str(color))
+        generate_tone(int(pix[0])*8)
+        tt.write(pix[0])
         tt.write("\n")
         if count == 25:
-            generate_tone(6500, fs*.03)
+            generate_tone(7000, fs*.05)
             count = 0
         count = count + 1
-        
+
 f = wave.open('audio/sound.wav', 'w')
 f.setparams((int(channels), int(dataSize), int(fs), int(numSamples), "NONE", "Uncompressed"))
 f.writeframes(data.tostring())
