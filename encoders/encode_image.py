@@ -6,7 +6,7 @@ import wave
 from math import *
 
 
-im = Image.open('images/swimmer_color.png')
+im = Image.open('images/swimmer_color.JPG')
 pixels = list(im.getdata())
 
 raw_data_rgb = open("data/raw_data_rgb.txt", 'w')

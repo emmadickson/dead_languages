@@ -20,75 +20,70 @@ String row = "";
 boolean pixel_flag = false;
 Map<Integer, String> sound_mappings = new Hashtable();
 Map<String, int[]> color_mappings = new Hashtable();
-Map<Integer, String[]> og_color_mappings = new Hashtable();
 
+// Bayer matrix
+int[][] matrix = {   
+  {
+    1, 9, 3, 11
+  }
+  , 
+  {
+    13, 5, 15, 7
+  }
+  , 
+  {
+    4, 12, 2, 10
+  }
+  , 
+  {
+    16, 8, 14, 6
+  }
+};
+
+
+
+float mratio = 1.0 / 17;
+float mfactor = 255.0 / 5;
 int cellCount = 0;
-int t = 200;
-Integer[] buckets = new Integer[t];
-
 
 void setup() {
-  for (int i = 0; i < 200; i++){
-  buckets[i] = i*40;
-}
-  int[] red = {251,13,28};
-  color_mappings.put("red", red);
-  
-  int[] yellow = {253,250,55};
-  color_mappings.put("yellow", yellow);
-  
-  int[] cyan  = {45,255,254};
-  color_mappings.put("cyan", cyan);
-  
-  int[] green = {42,253,47};
-  color_mappings.put("green", green);
-  
-  int[] pink = {253,41,252};
-  color_mappings.put("pink", pink);
-  
-  int[] blue = {11,35,243};
-  color_mappings.put("blue", blue);
-
   int[] white = {255,255,255};
   color_mappings.put("white", white);
+  
+  int[] blue = {0,54,247};
+  color_mappings.put("blue", blue);
+  
+  int[] green = {0,247,63};
+  color_mappings.put("green", green);
+  
+  int[] cyan = {0,251,253};
+  color_mappings.put("cyan", cyan);
+  
+  int[] red = {255,51,40};
+  color_mappings.put("red", red);
+  
+  int[] magenta = {255,70,250};
+  color_mappings.put("magenta", magenta);
+  
+  int[] yellow = {255,251,75};
+  color_mappings.put("yellow", yellow);
   
   int[] black = {0,0,0};
   color_mappings.put("black", black);
 
-  int[] gray1 = {51,51,51};
-  color_mappings.put("gray1", gray1);
-  
-  int[] gray2 = {102,102,102};
-  color_mappings.put("gray2", gray2);
-  
-  int[] gray3 = {152,152,152};
-  color_mappings.put("gray3", gray3);
-  
-  int[] gray4 = {203,203,203};
-  color_mappings.put("gray4", gray4);
-  
-  int[] magenta = {255, 0, 255};
-  color_mappings.put("magenta", magenta);
-  
-  sound_mappings.put(300, "red");
-  sound_mappings.put(400, "yellow");
-  sound_mappings.put(500, "cyan");
+  sound_mappings.put(200, "white");
+  sound_mappings.put(400, "blue");
   sound_mappings.put(600, "green");
-  sound_mappings.put(700, "pink");
-  sound_mappings.put(800, "blue");
-  sound_mappings.put(900, "white");
-  sound_mappings.put(1000, "black");
-  sound_mappings.put(1100, "gray1");
-  sound_mappings.put(1200, "gray2");
-  sound_mappings.put(1300, "gray3");
-  sound_mappings.put(1400, "gray4");
-  sound_mappings.put(1500, "magenta");
+  sound_mappings.put(800, "cyan");
+  sound_mappings.put(1000, "red");
+  sound_mappings.put(1200, "magenta");
+  sound_mappings.put(1400, "yellow");
+  sound_mappings.put(1600, "black");
 
-
-  size(750, 750);
+  size(600, 600);
   fill(126);
   background(255);
-
+  frameRate(150);
   fft = new FFT(this, bands);
   in = new AudioIn(this, 0);
   
@@ -110,74 +105,21 @@ String map_freq(int freq, Map<Integer, String> sound_mappings){
     }
     return "fail";
 }
-public static int find(int[] a, int target)
-{
-  for (int i = 0; i < a.length; i++)
-    if (a[i] == target)
-      return i;
-
-  return -1;
-}
 
 void makepixel(int r, int g, int b){
-  color c = color(r,g,b);
-  color star = color(r+1,g+1,b+1);
-  color aux = color(r+2,g+2,b+2);
+  color oldpixel = color(r,g,b);
+  color c = color( (oldpixel >> 16 & 0xFF) + (mratio*matrix[x%4][y%4] * mfactor), (oldpixel >> 8 & 0xFF) + (mratio*matrix[x%4][y%4] * mfactor), (oldpixel & 0xFF) + + (mratio*matrix[x%4][y%4] * mfactor) );
 
-  stroke(aux);
-  fill(aux);          
-  rect(x,y,2,2);
-  
-  x = x + 2;
-  stroke(star);
-  fill(star);          
-  rect(x,y,2,2);
-  
-  x = x + 2;
-  stroke(aux);
-  fill(aux);          
-  rect(x,y,2,2);
-  
-  y = y + 2;
-  x = x - 4;
-  
-  stroke(star);
-  fill(star);          
-  rect(x,y,2,2);
-  
-  x = x + 2;
   stroke(c);
   fill(c);          
-  rect(x,y,2,2);
+  rect(x,y,3,3);
  
-  x = x + 2;
-  stroke(star);
-  fill(star);          
-  rect(x,y,2,2);
+  x = x + 3;
   
-  y = y + 2;
-  x = x - 4;
-  
-  stroke(aux);
-  fill(aux);          
-  rect(x,y,2,2);
-  
-  x = x + 2;
-  stroke(star);
-  fill(star);          
-  rect(x,y,2,2);
- 
-  x = x + 2;
-  stroke(aux);
-  fill(aux);          
-  rect(x,y,2,2);
-  
-  x = x + 2;
-  y = y - 4;
   cellCount = cellCount + 1;
-  if (cellCount >= 125){
+  if (cellCount >= 200){
     x = 0;
-    y = y + 7;
+    y = y + 3;
     cellCount = 0;
   }
 }
@@ -216,10 +158,6 @@ void draw() {
   fft.analyze(spectrum);
   float max_1 = -1;
   int max_1_index = -1;
-  float max_2 = -1;
-  int max_2_index = -1;
-  float max_3 = -1;
-  int max_3_index = -1;
   
   for(int i = 0; i < bands; i++){
     if(spectrum[i] > max_1){
@@ -312,7 +250,6 @@ void draw() {
               println(value);
               if (value != "fail"){
                int[] new_color = color_mappings.get(value);
-               color c = color(new_color[0], new_color[1], new_color[2]);
                makepixel(new_color[0], new_color[1], new_color[2]);
              }
              else{
@@ -320,30 +257,9 @@ void draw() {
                println("fail");
                makepixel(50, 50, 50);
              }
-             
-               
-             }
-
+            }
            }
           }
-          /*
-          og_color_mappings.put(rgb, row_pixels);
-           if (rgb == 2){
-             rgb = -1;
-             String[] red_row = og_color_mappings.get(0);
-             String[] green_row = og_color_mappings.get(1);
-             String[] blue_row = og_color_mappings.get(2);
-             for (int l = 0; l <= row_pixels.length-1; l++){     
-                 int[] parse_color = {700-parseInt(red_row[l]), 700-parseInt(green_row[l]), 700-parseInt(blue_row[l])};
-                 int[] color_mapped = map_freq(parse_color, color_mappings);
-                 color c = color(color_mapped[0], color_mapped[1], color_mapped[2]);
-                 makepixel(c);
-                 
-              }  
-           }
-           rgb = rgb + 1;
-          }
-          */
           row = "";
         }
         if  (parseInt(packet[i]) > 50){
